@@ -17,7 +17,7 @@ typedef struct Location{
 // Function which executes the search for route between two cities
 void printRoute(char *From, char *To, Location cities[]){
 	int east = 0, e = 0; //  0 implies that eastern side hasn't been traversed yet, 1 implies the opposite
-  	int west = 0, w = 0; //  0 implies that eastern side hasn't been traversed yet, 1 implies the opposite
+  	int west = 0, w = 0; //  0 implies that western side hasn't been traversed yet, 1 implies the opposite
   	char route[12][15];  // This stores all the cities between origin and destination
 	int totalCities = 0; 
 	int destinationFound = 0; // 0 implies that destination hasn't been found yet, 1 implies the opposite 
