@@ -109,9 +109,11 @@ void main(void){
         }
 	
 	printf("\n Hello!, please enter the origin: ");
-	scanf("%s",origin);
-	printf("\n Please enter the destination: ");
-	scanf("%s",destination);
+	fgets(origin, 15, stdin);
+        origin[strcspn(origin, "\n")] = '\0';
+        printf("\n Please enter the destination: ");
+        fgets(destination, 15, stdin);
+        destination[strcspn(destination, "\n")] = '\0';
        	printRoute(origin, destination, eastWestMap); //Function which prints cities between origin and destination
 
 }
