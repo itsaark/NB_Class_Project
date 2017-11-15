@@ -7,7 +7,7 @@
 
 // Location node
 typedef struct Location{
-        char name[15];
+        char name[20];
         struct Location *east;
         struct Location *west;
         struct Location *north;
@@ -27,7 +27,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 	int isJuncationFound = 0;
 	Location *EWJunction = &ewCities[4];
 	Location *NSJunction = &nsCities[2];	
-  	char route[23][15];  // This stores all the cities between origin and destination
+  	char route[23][20];  // This stores all the cities between origin and destination
 	int totalCities = 0; 
 	int destinationFound = 0; // 0 implies that destination hasn't been found yet, 1 implies the opposite 
   	Location *origin; // Origin
@@ -115,24 +115,24 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 				printf("I'm running at line");
 				if(directionOfJunction == 'e'){
 					strcpy(route[e], currentNode->name);
+					totalCities += 1;
                                 	if(strcmp(currentNode->name, EWJunction->name) == 0){
                                         	isJuncationFound = 1;
 						indexOfJunction = e;
                                         	currentNode = currentNode->north;
                                         	break;
                                 	}
-					totalCities += 1;
 					e += 1;
 					currentNode = currentNode->east;	
 				}else{
 					strcpy(route[w], currentNode->name);
+					totalCities += 1;
                                         if(strcmp(currentNode->name, EWJunction->name) == 0){
                                                 isJuncationFound = 1;
 						indexOfJunction = w;
                                                 currentNode = currentNode->north;
                                                 break;
                                         }
-                                        totalCities += 1;
 					w += 1;
 					currentNode = currentNode->west;
 				}
@@ -149,7 +149,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                         north = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 23; a < indexOfJunction ; a--){
+                                                for(int a = 23; a <indexOfJunction ; a--){
                                                         for (int b = 0; b < 15; b++){
                                                                 route[a][b] = '\0';
                                                         }
@@ -253,24 +253,24 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                 printf("I'm running at line");
                                 if(directionOfJunction == 'n'){
                                         strcpy(route[n], currentNode->name);
+					totalCities += 1;
                                         if(strcmp(currentNode->name, NSJunction->name) == 0){
                                                 isJuncationFound = 1;
                                                 indexOfJunction = n;
                                                 currentNode = currentNode->east;
                                                 break;
                                         }
-                                        totalCities += 1;
                                         n += 1;
                                         currentNode = currentNode->north;
                                 }else{
                                         strcpy(route[s], currentNode->name);
+					totalCities += 1;
                                         if(strcmp(currentNode->name, NSJunction->name) == 0){
                                                 isJuncationFound = 1;
                                                 indexOfJunction = s;
                                                 currentNode = currentNode->east;
                                                 break;
                                         }
-                                        totalCities += 1;
                                         s += 1;
                                         currentNode = currentNode->south;
                                 }
@@ -330,7 +330,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
    	}
 	printf("\n");
 	printf("Here is the route from %s to %s\n", From, To);
-	for(int z = 0; z <=totalCities; z++){
+	for(int z = 0; z <totalCities; z++){
 		printf("%s\t",route[z]);
 	}
 	printf("\n");  
@@ -342,8 +342,8 @@ void main(void){
 	char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
 	Location eastWestMap[12]; // An array of east to west city nodes
 	Location northSouthMap[12]; // An array of north to south city nodes
-	char origin[15];
-	char destination[15];	
+	char origin[20];
+	char destination[20];	
 	//Initializing nodes
         for (int i = 0; i< 12; i++){
                 strcpy(eastWestMap[i].name,eastToWestList[i]);
@@ -386,11 +386,15 @@ void main(void){
         eastWestMap[4].north = northSouthMap[2].north;
 	northSouthMap[2].east = eastWestMap[4].east;
         northSouthMap[2].west = eastWestMap[4].west;
-	printf("hello %s %s",northSouthMap[2].south->name, eastWestMap[4].east->name);	
+	
 	printf("\n Hello!, please enter the origin: ");
-	scanf("%s",origin);
+	//scanf("%s",origin);
+	fgets(origin, 20, stdin);
+	origin[strcspn(origin, "\n")] = '\0';
 	printf("\n Please enter the destination: ");
-	scanf("%s",destination);
+	//scanf("%s",destination);
+	fgets(destination, 20, stdin);
+	destination[strcspn(destination, "\n")] = '\0';
        	printRoute(origin, destination, eastWestMap, northSouthMap); //Function which prints cities between origin and destination
 
 }
