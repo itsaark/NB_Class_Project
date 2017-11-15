@@ -14,6 +14,25 @@ typedef struct Location{
         struct Location *south;
 }Location;
 
+// Function which checks user input to make sure it is valid
+void inputCheck(char message[], char input[15], Location Map[])//lookup struck name
+{
+        int condition = 1;
+        while(condition != 0)
+        {
+                printf("\n %s ", message);
+                fgets(input, 15, stdin);
+                input[strcspn(input, "\n")] = '\0';
+                for(int i = 0; i < 12; ++i)
+                {
+                        condition = strcmp(input, Map[i].name);
+                        if(condition == 0) break;
+                }
+                if(condition == 0) return;
+                printf("Invalid input. Try again. \n");
+        }
+}
+
 // Function which executes the search for route between two cities
 void printRoute(char *From, char *To, Location cities[]){
 	int east = 0, e = 0; //  0 implies that eastern side hasn't been traversed yet, 1 implies the opposite
@@ -108,12 +127,8 @@ void main(void){
                 }
         }
 	
-	printf("\n Hello!, please enter the origin: ");
-	fgets(origin, 15, stdin);
-        origin[strcspn(origin, "\n")] = '\0';
-        printf("\n Please enter the destination: ");
-        fgets(destination, 15, stdin);
-        destination[strcspn(destination, "\n")] = '\0';
+        inputCheck("Hello!, please enter the origin: ", origin, eastWestMap);
+        inputCheck("Please enter the destination: ", destination, eastWestMap);
        	printRoute(origin, destination, eastWestMap); //Function which prints cities between origin and destination
 
 }
