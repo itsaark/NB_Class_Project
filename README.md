@@ -7,10 +7,9 @@ This program helps you find the route between two cities from the following list
 ["Sandy", "Boring", "Gresham", "East Portland", "i5", "West Portland", "Sylvan", "Beaverton", "Tanasbourne", "Hillsboro", "North Plains", "Mountaindale"]
 ["Vancouver", "North Portland", "Hwy 26", "South Portland", "Tigard", "Lake Oswego", "Tualatin", "Stafford", "Wilsonville", "Aurora", "Hubbard", "Woodburn"]
 
-### Pseudo code
-Our apporach to this progarm is pretty straigtforward.
-The algorithm then starts looking for the destination on the same branch where the origin is present.If it doesn 't find it, we then look for the junction node, then traverse through the other branch, with junction as our base.
-Our location node looks like this
+### Pseudo code.
+Our approach to this program is pretty straightforward. The search algorithm first looks for the origin.
+Then it starts looking for the destination on the same branch where the origin is present. If it doesn't find it, it then looks for the junction node, then traverse through the other branch, with junction as the base.
 
 ```
 typedef struct Location {
@@ -22,7 +21,7 @@ typedef struct Location {
 }Location;
 ```
 
-We begin our search algorithm by looking for the origin like so
+Search algorithm looking for the origin
 
 ```
 for (int i = 0; i < 12; i++){
@@ -39,7 +38,7 @@ for (int i = 0; i < 12; i++){
 }
 ```
 
-This section of code is looking for the destination on it 's own branch
+This section of code is looking for the destination on it's own branch
 
 ```
 if (isEWOrigin == 1) {
@@ -106,7 +105,7 @@ if (isEWOrigin == 1) {
 
 ### Working with the code
 
-Our program runs on a case-sensitive code. So please input the names of cities according to the list provided above.
+The program runs on a case-sensitive code. So please input the names of cities according to the list provided above.
 
 
 ```
