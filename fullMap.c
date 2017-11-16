@@ -45,7 +45,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 	int isNSOrigin = 0;
 	int indexOfJunction = 0;
 	char directionOfJunction;
-	int isJuncationFound = 0;
+	int isJunctionFound = 0;
 	Location *EWJunction = &ewCities[4];
 	Location *NSJunction = &nsCities[2];	
   	char route[23][20];  // This stores all the cities between origin and destination
@@ -73,7 +73,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
     			while(east == 0){
       				strcpy(route[e], currentNode->name);
 				if(strcmp(currentNode->name, EWJunction->name) == 0){
-					isJuncationFound = 1;
+					isJunctionFound = 1;
 					directionOfJunction = 'e';
 				}
 				totalCities += 1;
@@ -102,7 +102,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
     			while(west == 0 && destinationFound == 0){
       				strcpy(route[w], currentNode->name);
 				if(strcmp(currentNode->name, EWJunction->name) == 0){
-					isJuncationFound = 1;
+					isJunctionFound = 1;
 					directionOfJunction = 'w';
                         	}
 				totalCities += 1; 
@@ -122,19 +122,19 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                 	}
                                 	currentNode = origin;
                                 	totalCities = 0;
-					isJuncationFound = 0;
+					isJunctionFound = 0;
 					w = 0;
                                 	break;
       				}
       				currentNode = currentNode->west;
       				w += 1;
     			}
-			while(isJuncationFound == 0 && destinationFound == 0){
+			while(isJunctionFound == 0 && destinationFound == 0){
 				if(directionOfJunction == 'e'){
 					strcpy(route[e], currentNode->name);
 					totalCities += 1;
                                 	if(strcmp(currentNode->name, EWJunction->name) == 0){
-                                        	isJuncationFound = 1;
+                                        	isJunctionFound = 1;
 						indexOfJunction = e;
                                         	currentNode = currentNode->north;
                                         	break;
@@ -145,7 +145,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 					strcpy(route[w], currentNode->name);
 					totalCities += 1;
                                         if(strcmp(currentNode->name, EWJunction->name) == 0){
-                                                isJuncationFound = 1;
+                                                isJunctionFound = 1;
 						indexOfJunction = w;
                                                 currentNode = currentNode->north;
                                                 break;
@@ -206,7 +206,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 			while(north == 0){
                                 strcpy(route[n], currentNode->name);
                                 if(strcmp(currentNode->name, NSJunction->name) == 0){
-                                        isJuncationFound = 1;
+                                        isJunctionFound = 1;
                                         directionOfJunction = 'n';
                                 }
                                 totalCities += 1;
@@ -235,8 +235,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                         while(south == 0 && destinationFound == 0){
                                 strcpy(route[s], currentNode->name);
                                 if(strcmp(currentNode->name, NSJunction->name) == 0){
-                                        isJuncationFound = 1;
-                                         directionOfJunction = 's';
+                                        isJunctionFound = 1;
+                                        directionOfJunction = 's';
                                 }
                                 totalCities += 1;
                                 if (strcmp(currentNode->name, To) == 0){
@@ -255,19 +255,19 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                         }
                                         currentNode = origin;
                                         totalCities = 0;
-                                        isJuncationFound = 0;
+                                        isJunctionFound = 0;
                                         s = 0;
                                         break;
                                 }
                                 currentNode = currentNode->south;
                                 s += 1;
                         }
-                        while(isJuncationFound == 0 && destinationFound == 0){
+                        while(isJunctionFound == 0 && destinationFound == 0){
                                 if(directionOfJunction == 'n'){
                                         strcpy(route[n], currentNode->name);
 					totalCities += 1;
                                         if(strcmp(currentNode->name, NSJunction->name) == 0){
-                                                isJuncationFound = 1;
+                                                isJunctionFound = 1;
                                                 indexOfJunction = n;
                                                 currentNode = currentNode->east;
                                                 break;
@@ -278,7 +278,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                         strcpy(route[s], currentNode->name);
 					totalCities += 1;
                                         if(strcmp(currentNode->name, NSJunction->name) == 0){
-                                                isJuncationFound = 1;
+                                                isJunctionFound = 1;
                                                 indexOfJunction = s;
                                                 currentNode = currentNode->east;
                                                 break;
