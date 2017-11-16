@@ -14,6 +14,27 @@ typedef struct Location{
         struct Location *south;
 }Location;
 
+// Function which checks user input to make sure it is valid
+void inputCheck(char message[], char input[20], Location Map1[], Location Map2[]){
+	int condition = 1;
+	while(condition != 0){
+		printf("\n %s ", message);
+		fgets(input, 20, stdin);
+		input[strcspn(input, "\n")] = '\0';
+		for(int i = 0; i < 12; ++i){
+			condition = strcmp(input, Map1[i].name);
+			if(condition == 0) break;
+		}
+		if(condition == 0) return;
+		for(int i = 0; i < 12; ++i){
+                        condition = strcmp(input, Map2[i].name);
+                        if(condition == 0) break;
+                }
+		if(condition == 0) return;
+		printf("Invalid input. Try again. \n");
+	}
+}
+
 // Function which executes the search for route between two cities
 void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 	int east = 0, e = 0; //  0 implies that eastern side hasn't been traversed yet, 1 implies the opposite
@@ -44,7 +65,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                         break;
                 }  
  	 }
-	printf("hello %s %s",EWJunction->name, EWJunction->north->name);
    	while(destinationFound == 0){
 		printf("The big loop");
      		Location *currentNode;
@@ -135,7 +155,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 				}
 			}
 			while(north == 0 && destinationFound == 0){
-				printf("I'm running non-stop");
 				strcpy(route[n+indexOfJunction+1], currentNode->name);
 				totalCities += 1;
 				n += 1;
@@ -160,7 +179,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 				currentNode = currentNode->north;		
 			}
 			while(south == 0 && destinationFound == 0){
-                                printf("I'm running south");
                                 strcpy(route[s+indexOfJunction+1], currentNode->name);
                                 totalCities += 1;
 				s += 1;
@@ -186,7 +204,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                         }
 		}else{
 			while(north == 0){
-                                //printf("east loop");
                                 strcpy(route[n], currentNode->name);
                                 if(strcmp(currentNode->name, NSJunction->name) == 0){
                                         isJuncationFound = 1;
@@ -216,7 +233,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                 n += 1;
                         }
                         while(south == 0 && destinationFound == 0){
-                                //printf("west loop");
                                 strcpy(route[s], currentNode->name);
                                 if(strcmp(currentNode->name, NSJunction->name) == 0){
                                         isJuncationFound = 1;
@@ -247,7 +263,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                 s += 1;
                         }
                         while(isJuncationFound == 0 && destinationFound == 0){
-                                printf("I'm running at line");
                                 if(directionOfJunction == 'n'){
                                         strcpy(route[n], currentNode->name);
 					totalCities += 1;
@@ -273,7 +288,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                 }
                         }
                         while(east == 0 && destinationFound == 0){
-                                printf("I'm running non-stop");
                                 strcpy(route[e+indexOfJunction+1], currentNode->name);
                                 totalCities += 1;
                                 if (strcmp(currentNode->name, To) == 0){
@@ -298,7 +312,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
                                 e += 1;
                         }
                         while(west == 0 && destinationFound == 0){
-                                //printf("I'm running south");
                                 strcpy(route[w+indexOfJunction+1], currentNode->name);
                                 totalCities += 1;
                                 if (strcmp(currentNode->name, To) == 0){
@@ -326,7 +339,6 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 		}
    	}
 	printf("\n");
-	printf("Total number of cities %d",totalCities);
 	printf("Here is the route from %s to %s\n", From, To);
 	for(int z = 0; z <totalCities; z++){
 		printf("%s\t",route[z]);
@@ -385,14 +397,16 @@ void main(void){
 	northSouthMap[2].east = eastWestMap[4].east;
         northSouthMap[2].west = eastWestMap[4].west;
 	
-	printf("\n Hello!, please enter the origin: ");
+	//printf("\n Hello!, please enter the origin: ");
 	//scanf("%s",origin);
-	fgets(origin, 20, stdin);
-	origin[strcspn(origin, "\n")] = '\0';
-	printf("\n Please enter the destination: ");
+	//fgets(origin, 20, stdin);
+	//origin[strcspn(origin, "\n")] = '\0';
+	//printf("\n Please enter the destination: ");
 	//scanf("%s",destination);
-	fgets(destination, 20, stdin);
-	destination[strcspn(destination, "\n")] = '\0';
+	//fgets(destination, 20, stdin);
+	//destination[strcspn(destination, "\n")] = '\0';
+	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
+	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
        	printRoute(origin, destination, eastWestMap, northSouthMap); //Function which prints cities between origin and destination
 
 }
