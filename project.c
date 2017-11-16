@@ -41,7 +41,12 @@ void printRoute(char *From, char *To, Location cities[]){
 	int totalCities = 0; 
 	int destinationFound = 0; // 0 implies that destination hasn't been found yet, 1 implies the opposite 
   	Location *origin; // Origin
-  
+	if(strcmp(To,From) == 0){
+        	destinationFound = 1;
+        	printf("\n You're at the destination, duh!\n");
+		printf("\n");
+        	return;
+	}  
  	for (int i = 0; i < 12; i++){
 		if (strcmp(From, cities[i].name) == 0){
         		origin = &cities[i];
@@ -95,7 +100,7 @@ void printRoute(char *From, char *To, Location cities[]){
 	printf("\n");
 	printf("Here is the route from %s to %s\n", From, To);
 	for(int z = 0; z <totalCities; z++){
-		printf("%s\t",route[z]);
+		printf("%s    ",route[z]);
 	}
 	printf("\n");  
 }
