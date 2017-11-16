@@ -27,7 +27,7 @@ char *eastToWestList[] = {"Sandy", "Boring", "Gresham", "East Portland", "i5", "
 
 ```
 
-Then we take the names from the array and create an array of linked structs:
+Then we take the names from the array of city names and create a list of linked structs:
 
 ```
 
