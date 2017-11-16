@@ -1,4 +1,4 @@
-#Final Project for NB Foundation class
+# Final Project for NB Foundation class
 
 
 ## Getting Started
