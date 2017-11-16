@@ -55,6 +55,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 	if(strcmp(To,From) == 0){
 		destinationFound = 1;
         	printf("\n You're at the destination, duh!\n");
+		printf("\n");
         	return;
 
 	}

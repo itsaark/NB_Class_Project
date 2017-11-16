@@ -44,6 +44,7 @@ void printRoute(char *From, char *To, Location cities[]){
 	if(strcmp(To,From) == 0){
         	destinationFound = 1;
         	printf("\n You're at the destination, duh!\n");
+		printf("\n");
         	return;
 	}  
  	for (int i = 0; i < 12; i++){
