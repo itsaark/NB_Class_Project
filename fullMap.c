@@ -408,14 +408,7 @@ void main(void){
 	northSouthMap[2].east = eastWestMap[4].east;
         northSouthMap[2].west = eastWestMap[4].west;
 	
-	//printf("\n Hello!, please enter the origin: ");
-	//scanf("%s",origin);
-	//fgets(origin, 20, stdin);
-	//origin[strcspn(origin, "\n")] = '\0';
-	//printf("\n Please enter the destination: ");
-	//scanf("%s",destination);
-	//fgets(destination, 20, stdin);
-	//destination[strcspn(destination, "\n")] = '\0';
+	//Takes input from the user
 	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
 	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
        	printRoute(origin, destination, eastWestMap, northSouthMap); //Function which prints cities between origin and destination
