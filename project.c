@@ -100,7 +100,7 @@ void printRoute(char *From, char *To, Location cities[]){
 	printf("\n");
 	printf("Here is the route from %s to %s\n", From, To);
 	for(int z = 0; z <totalCities; z++){
-		printf("%s\t",route[z]);
+		printf("%s    ",route[z]);
 	}
 	printf("\n");  
 }
