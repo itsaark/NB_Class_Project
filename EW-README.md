@@ -164,8 +164,9 @@ Sandy	Boring	Gresham	East Portland	i5	South Portland
 ```
 
 ### Tests
-```
+
 Here are some test cases:
+
 1. Traversing from west origin to east desination.
 
 ```
@@ -180,6 +181,7 @@ Boring  Sandy
 ```
 2. Traversing from east origin to west destination.
 
+```
  Hello!, please enter the origin:  Sandy
 
  Please enter the destination:  i5
@@ -200,7 +202,23 @@ Here is the route from Hillsboro to Hillsboro
 Hillsboro
 
 ```
+4. Name of origin or destination is misspelled.
 
+```
+Hello!, please enter the origin:  Hillsbord
+Invalid input. Try again. 
+
+ Hello!, please enter the origin:  Hillsboro   
+
+ Please enter the destination:  Sandoops
+Invalid input. Try again. 
+
+ Please enter the destination:  Sandy
+
+Here is the route from Hillsboro to Sandy
+Hillsboro       Tanasbourne     Beaverton       Sylvan  West Portland   i5      East Portland   Gresham Boring  Sandy
+
+```
 ## License
 
 This project is licensed under the MIT License
