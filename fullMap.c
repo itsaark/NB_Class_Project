@@ -52,8 +52,18 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 	int totalCities = 0; 
 	int destinationFound = 0; // 0 implies that destination hasn't been found yet, 1 implies the opposite 
   	Location *origin; // Origin
-  
- 	for (int i = 0; i < 12; i++){
+	if(strcmp(To,From) == 0){
+		destinationFound = 1;
+        	printf("\n You're at the destination, duh!\n");
+        	return;
+
+	}
+ 	if( (strcmp(EWJunction->name,From) == 0 || strcmp(NSJunction->name,From) == 0) && (strcmp(EWJunction->name,To) == 0 || strcmp(NSJunction->name,To) == 0) ){
+		destinationFound = 1;
+		printf("\n You're at the destination, duh!\n");
+		return;
+	} 
+	for (int i = 0; i < 12; i++){
 		if (strcmp(From, ewCities[i].name) == 0){
         		origin = &ewCities[i];
 			isEWOrigin = 1;
