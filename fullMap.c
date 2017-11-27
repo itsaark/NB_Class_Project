@@ -367,9 +367,12 @@ void main(void){
 	char origin[20];
 	char destination[20];
 	STACK *stack1;
+	STACK *stack2;
 	stack1 = malloc(sizeof(STACK_ELEMENT));
+	stack2 = malloc(sizeof(STACK_ELEMENT));
 	STACK_ELEMENT tempNode;
-	createStack(stack1);	
+	createStack(stack1);
+	createStack(stack2);	
 	//Initializing nodes
         for (int i = 0; i< 12; i++){
                 strcpy(eastWestMap[i].name,eastToWestList[i]);
@@ -419,7 +422,11 @@ void main(void){
        	printRoute(origin, destination, eastWestMap, northSouthMap, stack1); //Function which prints cities between origin and destination
 	while (stack1->head->prev != NULL){
 		tempNode = Pop(stack1);
-		printf("%s\n", tempNode.name);
+		Push(stack2, tempNode.name);
 	}
+	while (stack2->head->prev != NULL){
+                tempNode = Pop(stack2);
+                printf("%s\n", tempNode.name);
+        }
 }
 
