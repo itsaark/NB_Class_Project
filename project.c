@@ -46,16 +46,13 @@ Location initializeMap(Location map[])
 }
 
 // Function which checks user input to make sure it is valid
-void inputCheck(char message[], char input[MAXSTRING], Location Map[])//lookup struct name
-{
+void inputCheck(char message[], char input[MAXSTRING], Location Map[]){//lookup struct name
         int condition = 1;
-        while(condition != 0)
-        {
+        while(condition != 0){
                 printf("\n %s ", message);
                 fgets(input, MAXSTRING, stdin);
                 input[strcspn(input, "\n")] = '\0';
-                for(int i = 0; i < LOCATIONS; ++i)
-                {
+                for(int i = 0; i < LOCATIONS; ++i){
                         condition = strcmp(input, Map[i].name);
                         if(condition == 0) break;
                 }
@@ -69,7 +66,7 @@ void printRoute(char *From, char *To, Location cities[]){
 	int east = 0, e = 0; //  0 implies that eastern side hasn't been traversed yet, 1 implies the opposite
   	int west = 0, w = 0; //  0 implies that western side hasn't been traversed yet, 1 implies the opposite
   	char route[LOCATIONS][MAXSTRING];  // This stores all the cities between origin and destination
-	int totalCities = 0; 
+	int totalCities = 0;
 	int destinationFound = 0; // 0 implies that destination hasn't been found yet, 1 implies the opposite 
   	Location *origin; // Origin
 	if(strcmp(To,From) == 0){
