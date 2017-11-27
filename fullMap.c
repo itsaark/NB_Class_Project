@@ -6,16 +6,6 @@
 #include <string.h>
 #include "stack.h"
 #include <stdlib.h>
-<<<<<<< HEAD
-#define LOCATIONS 12
-
-
-// Location node
-typedef struct Location{
-        char name[20];
-	char direction[20];
-	float distance;
-=======
 
 #define MAXSTRING 20  //The maximum number of characters for a string
 #define LOCATIONS 12  //The number of cites on i26.
@@ -23,7 +13,8 @@ typedef struct Location{
 // Location node
 typedef struct Location{
         char name[MAXSTRING];
->>>>>>> 751ed031f3d7531f2d773e058c7810eae5175cef
+	char direction[MAXSTRING];
+	float distance;
         struct Location *east;
         struct Location *west;
         struct Location *north;
@@ -450,44 +441,30 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
   
 
 void main(void){
-	void printRoute(char *To, char *From, Location ewCities[], Location nsCities[], STACK *stack1);
-<<<<<<< HEAD
-	Location eastWestMap[LOCATIONS];
-	Location northSouthMap[LOCATIONS]; 
-	char origin[20];
-	char destination[20];
-=======
-        char *eastToWestList[] = {"Sandy","Boring","Gresham","East Portland","i5","West Portland","Sylvan","Beaverton","Tanasbourne","Hillsboro","North Plains","Mountaindale"};
-	char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
+	void printRoute(char *To, char *From, Location ewCities[], Location nsCities[], STACK *stack1); 
+        //char *eastToWestList[] = {"Sandy","Boring","Gresham","East Portland","i5","West Portland","Sylvan","Beaverton","Tanasbourne","Hillsboro","North Plains","Mountaindale"};
+	//char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
 	Location eastWestMap[LOCATIONS]; // An array of east to west city nodes
 	Location northSouthMap[LOCATIONS]; // An array of north to south city nodes
 	char origin[MAXSTRING];
 	char destination[MAXSTRING];
->>>>>>> 751ed031f3d7531f2d773e058c7810eae5175cef
 	STACK *stack1;
 	STACK *stack2;
 	stack1 = malloc(sizeof(STACK_ELEMENT));
 	stack2 = malloc(sizeof(STACK_ELEMENT));
 	STACK_ELEMENT tempNode;
 	createStack(stack1);
-	createStack(stack2);	
+	createStack(stack2);
+	
 	//Initializing nodes
-<<<<<<< HEAD
 	initializeMap(eastWestMap, northSouthMap);
 	//Takes input from the user
 	for (int i = 0; i< LOCATIONS; i++)
 	{
 		printf("At location %s, the direction is %s\n", eastWestMap[i].name, eastWestMap[i].direction);
 	}
-//	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
-//	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
-//       	printRoute(origin, destination, eastWestMap, northSouthMap, stack1); //Function which prints cities between origin and destination
-//	while (stack1->head->prev != NULL){
-//		tempNode = Pop(stack1);
-//		printf("%s\n", tempNode.name);
-//	}
-=======
-        for (int i = 0; i< LOCATIONS; i++){
+
+       /*for (int i = 0; i< LOCATIONS; i++){
                 strcpy(eastWestMap[i].name,eastToWestList[i]);
 		strcpy(northSouthMap[i].name,northToSouthList[i]);
                 if(i == 0){
@@ -521,13 +498,13 @@ void main(void){
                         northSouthMap[i].south = &northSouthMap[i+1];
                         northSouthMap[i].north = &northSouthMap[i-1];
                 }
-        }
+        }*/
 
 	//Merging two maps
-	eastWestMap[4].south = northSouthMap[2].south;
-        eastWestMap[4].north = northSouthMap[2].north;
-	northSouthMap[2].east = eastWestMap[4].east;
-        northSouthMap[2].west = eastWestMap[4].west;
+	//eastWestMap[4].south = northSouthMap[2].south;
+        //eastWestMap[4].north = northSouthMap[2].north;
+	//northSouthMap[2].east = eastWestMap[4].east;
+        //northSouthMap[2].west = eastWestMap[4].west;
 	
 	//Takes input from the user
 	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
@@ -541,6 +518,5 @@ void main(void){
                 tempNode = Pop(stack2);
                 printf("%s\n", tempNode.name);
         }
->>>>>>> 751ed031f3d7531f2d773e058c7810eae5175cef
 }
 
