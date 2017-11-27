@@ -4,7 +4,8 @@
 
 #include <stdio.h>
 #include <string.h>
-
+#include "stack.h"
+#include <stdlib.h>
 // Location node
 typedef struct Location{
         char name[20];
@@ -36,7 +37,7 @@ void inputCheck(char message[], char input[20], Location Map1[], Location Map2[]
 }
 
 // Function which executes the search for route between two cities
-void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
+void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], STACK *stack1){
 	int east = 0, e = 0; //  0 implies that eastern side hasn't been traversed yet, 1 implies the opposite
   	int west = 0, w = 0; //  0 implies that western side hasn't been traversed yet, 1 implies the opposite
 	int north = 0, n = 0; //  0 implies that northern side hasn't been traversed yet, 1 implies the opposite
@@ -352,19 +353,23 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[]){
 	printf("\n");
 	printf("Here is the route from %s to %s\n", From, To);
 	for(int z = 0; z <totalCities; z++){
-		printf("%s   ",route[z]);
+		Push(stack1,route[z]);
 	}
 	printf("\n");  
 }  
 
 void main(void){
-	void printRoute(char *To, char *From, Location ewCities[], Location nsCities[]);
+	void printRoute(char *To, char *From, Location ewCities[], Location nsCities[], STACK *stack1);
         char *eastToWestList[] = {"Sandy","Boring","Gresham","East Portland","i5","West Portland","Sylvan","Beaverton","Tanasbourne","Hillsboro","North Plains","Mountaindale"};
 	char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
 	Location eastWestMap[12]; // An array of east to west city nodes
 	Location northSouthMap[12]; // An array of north to south city nodes
 	char origin[20];
-	char destination[20];	
+	char destination[20];
+	STACK *stack1;
+	stack1 = malloc(sizeof(STACK_ELEMENT));
+	STACK_ELEMENT tempNode;
+	createStack(stack1);	
 	//Initializing nodes
         for (int i = 0; i< 12; i++){
                 strcpy(eastWestMap[i].name,eastToWestList[i]);
@@ -411,7 +416,10 @@ void main(void){
 	//Takes input from the user
 	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
 	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
-       	printRoute(origin, destination, eastWestMap, northSouthMap); //Function which prints cities between origin and destination
-
+       	printRoute(origin, destination, eastWestMap, northSouthMap, stack1); //Function which prints cities between origin and destination
+	while (stack1->head->prev != NULL){
+		tempNode = Pop(stack1);
+		printf("%s\n", tempNode.name);
+	}
 }
 
