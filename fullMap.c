@@ -6,14 +6,94 @@
 #include <string.h>
 #include "stack.h"
 #include <stdlib.h>
+#define LOCATIONS 12
+
+
 // Location node
 typedef struct Location{
         char name[20];
+	char direction[20];
+	float distance;
         struct Location *east;
         struct Location *west;
         struct Location *north;
         struct Location *south;
 }Location;
+
+//Function that initializes the map
+void initializeMap(Location eastWestMap[], Location northSouthMap[])
+{
+        char *eastToWestList[] = {"Sandy","Boring","Gresham","East Portland","i5","West Portland","Sylvan","Beaverton","Tanasbourne","Hillsboro","North Plains","Mountaindale"};
+	char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
+	char *directions[] = {"east", "west", "north", "south"};
+//	Location eastWestMap[12]; // An array of east to west city nodes
+//	Location northSouthMap[12]; // An array of north to south city nodes
+ 
+
+       for (int i = 0; i< LOCATIONS; i++){
+                strcpy(eastWestMap[i].name,eastToWestList[i]);
+		strcpy(northSouthMap[i].name,northToSouthList[i]);
+	        if(i == 0){
+			strcpy(eastWestMap[i].direction, directions[0]);
+                        eastWestMap[i].east = NULL;
+                        eastWestMap[i].west = &eastWestMap[1];
+                        eastWestMap[i].south = NULL;
+                        eastWestMap[i].north = NULL;
+
+			strcpy(northSouthMap[i].direction, directions[2]);
+			northSouthMap[i].east = NULL;
+                        northSouthMap[i].west = NULL;
+                        northSouthMap[i].south = &northSouthMap[1];
+                        northSouthMap[i].north = NULL;
+		}	else if(i == 11){
+			strcpy(eastWestMap[i].direction, directions[1]);
+                        eastWestMap[i].east = &eastWestMap[10];
+                        eastWestMap[i].west = NULL;
+                        eastWestMap[i].south = NULL;
+                        eastWestMap[i].north = NULL;
+
+			strcpy(northSouthMap[i].direction, directions[3]);
+			northSouthMap[i].east = NULL;
+                        northSouthMap[i].west = NULL;
+                        northSouthMap[i].south = NULL;
+                        northSouthMap[i].north = &northSouthMap[10];
+                }else{
+			strcpy(eastWestMap[i].direction, directions[0]);
+                        eastWestMap[i].east = &eastWestMap[i-1];
+                        eastWestMap[i].west = &eastWestMap[i+1];;
+                        eastWestMap[i].south = NULL;
+                        eastWestMap[i].north = NULL;
+
+			strcpy(northSouthMap[i].direction, directions[2]);
+			northSouthMap[i].east = NULL;
+                        northSouthMap[i].west = NULL;
+                        northSouthMap[i].south = &northSouthMap[i+1];
+                        northSouthMap[i].north = &northSouthMap[i-1];
+			if (i == 2)
+			{
+			strcpy(northSouthMap[i].direction, "junction");
+			}
+			if (i > 2)
+			{
+			strcpy(northSouthMap[i].direction, directions[3]);
+			}
+			if (i == 4)
+			{
+			strcpy(eastWestMap[i].direction, "junction");
+			}
+			if (i > 4)
+			{
+			strcpy(eastWestMap[i].direction, directions[1]);
+			}
+                }
+        }
+
+	//Merging two maps
+	eastWestMap[4].south = northSouthMap[2].south;
+        eastWestMap[4].north = northSouthMap[2].north;
+	northSouthMap[2].east = eastWestMap[4].east;
+        northSouthMap[2].west = eastWestMap[4].west;
+}	
 
 // Function which checks user input to make sure it is valid
 void inputCheck(char message[], char input[20], Location Map1[], Location Map2[]){
@@ -356,14 +436,13 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
 		Push(stack1,route[z]);
 	}
 	printf("\n");  
-}  
+}
+  
 
 void main(void){
 	void printRoute(char *To, char *From, Location ewCities[], Location nsCities[], STACK *stack1);
-        char *eastToWestList[] = {"Sandy","Boring","Gresham","East Portland","i5","West Portland","Sylvan","Beaverton","Tanasbourne","Hillsboro","North Plains","Mountaindale"};
-	char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
-	Location eastWestMap[12]; // An array of east to west city nodes
-	Location northSouthMap[12]; // An array of north to south city nodes
+	Location eastWestMap[LOCATIONS];
+	Location northSouthMap[LOCATIONS]; 
 	char origin[20];
 	char destination[20];
 	STACK *stack1;
@@ -371,55 +450,18 @@ void main(void){
 	STACK_ELEMENT tempNode;
 	createStack(stack1);	
 	//Initializing nodes
-        for (int i = 0; i< 12; i++){
-                strcpy(eastWestMap[i].name,eastToWestList[i]);
-		strcpy(northSouthMap[i].name,northToSouthList[i]);
-                if(i == 0){
-                        eastWestMap[i].east = NULL;
-                        eastWestMap[i].west = &eastWestMap[1];
-                        eastWestMap[i].south = NULL;
-                        eastWestMap[i].north = NULL;
-			
-			northSouthMap[i].east = NULL;
-                        northSouthMap[i].west = NULL;
-                        northSouthMap[i].south = &northSouthMap[1];
-                        northSouthMap[i].north = NULL;
-                }else if(i == 11){
-                        eastWestMap[i].east = &eastWestMap[10];
-                        eastWestMap[i].west = NULL;
-                        eastWestMap[i].south = NULL;
-                        eastWestMap[i].north = NULL;
-			
-			northSouthMap[i].east = NULL;
-                        northSouthMap[i].west = NULL;
-                        northSouthMap[i].south = NULL;
-                        northSouthMap[i].north = &northSouthMap[10];
-                }else{
-                        eastWestMap[i].east = &eastWestMap[i-1];
-                        eastWestMap[i].west = &eastWestMap[i+1];;
-                        eastWestMap[i].south = NULL;
-                        eastWestMap[i].north = NULL;
-
-			northSouthMap[i].east = NULL;
-                        northSouthMap[i].west = NULL;
-                        northSouthMap[i].south = &northSouthMap[i+1];
-                        northSouthMap[i].north = &northSouthMap[i-1];
-                }
-        }
-
-	//Merging two maps
-	eastWestMap[4].south = northSouthMap[2].south;
-        eastWestMap[4].north = northSouthMap[2].north;
-	northSouthMap[2].east = eastWestMap[4].east;
-        northSouthMap[2].west = eastWestMap[4].west;
-	
+	initializeMap(eastWestMap, northSouthMap);
 	//Takes input from the user
-	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
-	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
-       	printRoute(origin, destination, eastWestMap, northSouthMap, stack1); //Function which prints cities between origin and destination
-	while (stack1->head->prev != NULL){
-		tempNode = Pop(stack1);
-		printf("%s\n", tempNode.name);
+	for (int i = 0; i< LOCATIONS; i++)
+	{
+		printf("At location %s, the direction is %s\n", eastWestMap[i].name, eastWestMap[i].direction);
 	}
+//	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
+//	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
+//       	printRoute(origin, destination, eastWestMap, northSouthMap, stack1); //Function which prints cities between origin and destination
+//	while (stack1->head->prev != NULL){
+//		tempNode = Pop(stack1);
+//		printf("%s\n", tempNode.name);
+//	}
 }
 
