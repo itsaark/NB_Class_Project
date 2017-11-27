@@ -6,6 +6,7 @@
 #include <string.h>
 #include "stack.h"
 #include <stdlib.h>
+<<<<<<< HEAD
 #define LOCATIONS 12
 
 
@@ -14,6 +15,15 @@ typedef struct Location{
         char name[20];
 	char direction[20];
 	float distance;
+=======
+
+#define MAXSTRING 20  //The maximum number of characters for a string
+#define LOCATIONS 12  //The number of cites on i26.
+
+// Location node
+typedef struct Location{
+        char name[MAXSTRING];
+>>>>>>> 751ed031f3d7531f2d773e058c7810eae5175cef
         struct Location *east;
         struct Location *west;
         struct Location *north;
@@ -96,18 +106,18 @@ void initializeMap(Location eastWestMap[], Location northSouthMap[])
 }	
 
 // Function which checks user input to make sure it is valid
-void inputCheck(char message[], char input[20], Location Map1[], Location Map2[]){
+void inputCheck(char message[], char input[MAXSTRING], Location Map1[], Location Map2[]){
 	int condition = 1;
 	while(condition != 0){
 		printf("\n %s ", message);
-		fgets(input, 20, stdin);
+		fgets(input, MAXSTRING, stdin);
 		input[strcspn(input, "\n")] = '\0';
-		for(int i = 0; i < 12; ++i){
+		for(int i = 0; i < LOCATIONS; ++i){
 			condition = strcmp(input, Map1[i].name);
 			if(condition == 0) break;
 		}
 		if(condition == 0) return;
-		for(int i = 0; i < 12; ++i){
+		for(int i = 0; i < LOCATIONS; ++i){
                         condition = strcmp(input, Map2[i].name);
                         if(condition == 0) break;
                 }
@@ -129,7 +139,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
 	int isJunctionFound = 0;
 	Location *EWJunction = &ewCities[4];
 	Location *NSJunction = &nsCities[2];	
-  	char route[23][20];  // This stores all the cities between origin and destination
+  	char route[2*LOCATIONS][MAXSTRING];  // This stores all the cities between origin and destination
 	int totalCities = 0; 
 	int destinationFound = 0; // 0 implies that destination hasn't been found yet, 1 implies the opposite 
   	Location *origin; // Origin
@@ -145,7 +155,7 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
 		printf("\n You're at the destination, duh!\n");
 		return;
 	} 
-	for (int i = 0; i < 12; i++){
+	for (int i = 0; i < LOCATIONS; i++){
 		if (strcmp(From, ewCities[i].name) == 0){
         		origin = &ewCities[i];
 			isEWOrigin = 1;
@@ -177,8 +187,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
         				east = 1;
 					//Given destinationFound is 0, if it's an end node, this resets the route list
         				if(destinationFound == 0){
-          					for(int a = 0; a < 23; a++){
-            						for (int b = 0; b < 15; b++){
+          					for(int a = 0; a < 2*LOCATIONS; a++){
+            						for (int b = 0; b < MAXSTRING; b++){
 								route[a][b] = '\0';
 							}
           					}
@@ -206,8 +216,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
         				west = 1;
 					//Given destinationFound is 0, if it's an end node, this resets the route list
                                 	if(destinationFound == 0){
-                                        	for(int a = 0; a < 23; a++){
-                                                	for (int b = 0; b < 15; b++){
+                                        	for(int a = 0; a < 2*LOCATIONS; a++){
+                                                	for (int b = 0; b < MAXSTRING; b++){
                                                         	route[a][b] = '\0';
                                                 	}
                                         	}
@@ -258,8 +268,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
                                         north = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 23; a <indexOfJunction ; a--){
-                                                        for (int b = 0; b < 15; b++){
+                                                for(int a = 2*LOCATIONS; a <indexOfJunction ; a--){
+                                                        for (int b = 0; b < MAXSTRING; b++){
                                                                 route[a][b] = '\0';
                                                         }
                                                 }
@@ -282,8 +292,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
                                         south = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 23; a <indexOfJunction ; a--){
-                                                        for (int b = 0; b < 15; b++){
+                                                for(int a = 2*LOCATIONS; a <indexOfJunction ; a--){
+                                                        for (int b = 0; b < MAXSTRING; b++){
                                                                 route[a][b] = '\0';
                                                         }
                                                 }
@@ -310,8 +320,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
                                         north = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 22; a >= 0; a--){
-                                                        for (int b = 0; b < 15; b++){
+                                                for(int a = 2*LOCATIONS - 1; a >= 0; a--){
+                                                        for (int b = 0; b < MAXSTRING; b++){
                                                                 route[a][b] = '\0';
                                                         }
                                                 }
@@ -339,8 +349,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
                                         south = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 0; a < 23; a++){
-                                                        for (int b = 0; b < 15; b++){
+                                                for(int a = 0; a < 2*LOCATIONS; a++){
+                                                        for (int b = 0; b < MAXSTRING; b++){
                                                                 route[a][b] = '\0';
                                                         }
                                                 }
@@ -390,8 +400,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
                                         east = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 23; a < indexOfJunction ; a--){
-                                                        for (int b = 0; b < 15; b++){
+                                                for(int a = 2*LOCATIONS; a < indexOfJunction ; a--){
+                                                        for (int b = 0; b < MAXSTRING; b++){
                                                                 route[a][b] = '\0';
                                                         }
                                                 }
@@ -414,8 +424,8 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
                                         west = 1;
                                         //Given destinationFound is 0, if it's an end node, this resets the route list
                                         if(destinationFound == 0){
-                                                for(int a = 23; a <indexOfJunction ; a--){
-                                                        for (int b = 0; b < 15; b++){
+                                                for(int a = 2*LOCATIONS; a <indexOfJunction ; a--){
+                                                        for (int b = 0; b < MAXSTRING; b++){
                                                                 route[a][b] = '\0';
                                                         }
                                                 }
@@ -441,15 +451,28 @@ void printRoute(char *From, char *To, Location ewCities[], Location nsCities[], 
 
 void main(void){
 	void printRoute(char *To, char *From, Location ewCities[], Location nsCities[], STACK *stack1);
+<<<<<<< HEAD
 	Location eastWestMap[LOCATIONS];
 	Location northSouthMap[LOCATIONS]; 
 	char origin[20];
 	char destination[20];
+=======
+        char *eastToWestList[] = {"Sandy","Boring","Gresham","East Portland","i5","West Portland","Sylvan","Beaverton","Tanasbourne","Hillsboro","North Plains","Mountaindale"};
+	char *northToSouthList[] = {"Vancouver","North Portland","Hwy 26","South Portland","Tigard","Lake Oswego","Tualatin","Stafford","Wilsonville","Aurora","Hubbard","Woodburn"};
+	Location eastWestMap[LOCATIONS]; // An array of east to west city nodes
+	Location northSouthMap[LOCATIONS]; // An array of north to south city nodes
+	char origin[MAXSTRING];
+	char destination[MAXSTRING];
+>>>>>>> 751ed031f3d7531f2d773e058c7810eae5175cef
 	STACK *stack1;
+	STACK *stack2;
 	stack1 = malloc(sizeof(STACK_ELEMENT));
+	stack2 = malloc(sizeof(STACK_ELEMENT));
 	STACK_ELEMENT tempNode;
-	createStack(stack1);	
+	createStack(stack1);
+	createStack(stack2);	
 	//Initializing nodes
+<<<<<<< HEAD
 	initializeMap(eastWestMap, northSouthMap);
 	//Takes input from the user
 	for (int i = 0; i< LOCATIONS; i++)
@@ -463,5 +486,61 @@ void main(void){
 //		tempNode = Pop(stack1);
 //		printf("%s\n", tempNode.name);
 //	}
+=======
+        for (int i = 0; i< LOCATIONS; i++){
+                strcpy(eastWestMap[i].name,eastToWestList[i]);
+		strcpy(northSouthMap[i].name,northToSouthList[i]);
+                if(i == 0){
+                        eastWestMap[i].east = NULL;
+                        eastWestMap[i].west = &eastWestMap[1];
+                        eastWestMap[i].south = NULL;
+                        eastWestMap[i].north = NULL;
+			
+			northSouthMap[i].east = NULL;
+                        northSouthMap[i].west = NULL;
+                        northSouthMap[i].south = &northSouthMap[1];
+                        northSouthMap[i].north = NULL;
+                }else if(i == LOCATIONS-1){
+                        eastWestMap[i].east = &eastWestMap[LOCATIONS-2];
+                        eastWestMap[i].west = NULL;
+                        eastWestMap[i].south = NULL;
+                        eastWestMap[i].north = NULL;
+			
+			northSouthMap[i].east = NULL;
+                        northSouthMap[i].west = NULL;
+                        northSouthMap[i].south = NULL;
+                        northSouthMap[i].north = &northSouthMap[LOCATIONS-2];
+                }else{
+                        eastWestMap[i].east = &eastWestMap[i-1];
+                        eastWestMap[i].west = &eastWestMap[i+1];;
+                        eastWestMap[i].south = NULL;
+                        eastWestMap[i].north = NULL;
+
+			northSouthMap[i].east = NULL;
+                        northSouthMap[i].west = NULL;
+                        northSouthMap[i].south = &northSouthMap[i+1];
+                        northSouthMap[i].north = &northSouthMap[i-1];
+                }
+        }
+
+	//Merging two maps
+	eastWestMap[4].south = northSouthMap[2].south;
+        eastWestMap[4].north = northSouthMap[2].north;
+	northSouthMap[2].east = eastWestMap[4].east;
+        northSouthMap[2].west = eastWestMap[4].west;
+	
+	//Takes input from the user
+	inputCheck("Hello!, please enter the origin: ", origin, eastWestMap, northSouthMap);
+	inputCheck("Please enter the destination: ", destination, eastWestMap, northSouthMap);
+       	printRoute(origin, destination, eastWestMap, northSouthMap, stack1); //Function which prints cities between origin and destination
+	while (stack1->head->prev != NULL){
+		tempNode = Pop(stack1);
+		Push(stack2, tempNode.name);
+	}
+	while (stack2->head->prev != NULL){
+                tempNode = Pop(stack2);
+                printf("%s\n", tempNode.name);
+        }
+>>>>>>> 751ed031f3d7531f2d773e058c7810eae5175cef
 }
 
