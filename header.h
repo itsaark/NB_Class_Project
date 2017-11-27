@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "string_comapre.c"
+#include "string_compare.c"
 
 
 
